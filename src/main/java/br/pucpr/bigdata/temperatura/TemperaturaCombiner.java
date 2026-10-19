@@ -5,21 +5,21 @@ import java.io.IOException;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-public class TemperaturaCombiner extends Reducer<Text, Text, Text, Text> {
+// Soma as temperaturas e a quantidade dentro de cada maquina (nao divide aqui para nao virar media das medias)
+public class TemperaturaCombiner extends Reducer<Text, SomaContagemWritable, Text, SomaContagemWritable> {
 
     @Override
-    protected void reduce(Text chave, Iterable<Text> valores, Context context)
+    protected void reduce(Text chave, Iterable<SomaContagemWritable> valores, Context context)
             throws IOException, InterruptedException {
 
         double somaParcial = 0;
         long quantidadeParcial = 0;
 
-        for (Text valor : valores) {
-            String[] partes = valor.toString().split(";");
-            somaParcial += Double.parseDouble(partes[0]);
-            quantidadeParcial += Long.parseLong(partes[1]);
+        for (SomaContagemWritable valor : valores) {
+            somaParcial += valor.getSoma();
+            quantidadeParcial += valor.getQuantidade();
         }
 
-        context.write(chave, new Text(somaParcial + ";" + quantidadeParcial));
+        context.write(chave, new SomaContagemWritable(somaParcial, quantidadeParcial));
     }
 }
