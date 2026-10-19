@@ -23,6 +23,8 @@ public class TemperaturaMain {
         job.setMapperClass(TemperaturaMap.class);
         job.setReducerClass(TemperaturaReduce.class);
 
+        job.setCombinerClass(TemperaturaCombiner.class);
+
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(Text.class);
 
