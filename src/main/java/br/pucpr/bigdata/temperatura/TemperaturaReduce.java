@@ -6,7 +6,7 @@ import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-// Junta as somas de todas as maquinas e calcula a media final
+// junta as somas de todas as maquinas e calcula a media final, uma vez no final após o shuffle
 public class TemperaturaReduce extends Reducer<Text, SomaContagemWritable, Text, DoubleWritable> {
 
     @Override
@@ -22,7 +22,7 @@ public class TemperaturaReduce extends Reducer<Text, SomaContagemWritable, Text,
         }
 
         if (quantidadeTotal > 0) {
-            // divide so uma vez, no final, com a soma e a quantidade totais
+            // divide so uma vez e envia a média
             double media = somaTotal / quantidadeTotal;
             context.write(new Text("media_temperatura"), new DoubleWritable(media));
         }

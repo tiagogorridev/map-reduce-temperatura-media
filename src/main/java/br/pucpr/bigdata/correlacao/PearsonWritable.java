@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import org.apache.hadoop.io.Writable;
 
-// Guarda as somas que a formula da correlacao precisa (x = outra coluna, y = temperatura)
+// guarda as somas que a formula da correlacao precisa (x = outra coluna, y = temperatura)
 public class PearsonWritable implements Writable {
 
     private long n;

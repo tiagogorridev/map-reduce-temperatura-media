@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-// Soma as temperaturas e a quantidade dentro de cada maquina (nao divide aqui para nao virar media das medias)
+// soma as temperaturas e a quantidade dentro de cada maquina após o map
 public class TemperaturaCombiner extends Reducer<Text, SomaContagemWritable, Text, SomaContagemWritable> {
 
     @Override
@@ -20,6 +20,7 @@ public class TemperaturaCombiner extends Reducer<Text, SomaContagemWritable, Tex
             quantidadeParcial += valor.getQuantidade();
         }
 
+        // envio do resumo (nao divide aqui para nao virar media das medias)
         context.write(chave, new SomaContagemWritable(somaParcial, quantidadeParcial));
     }
 }

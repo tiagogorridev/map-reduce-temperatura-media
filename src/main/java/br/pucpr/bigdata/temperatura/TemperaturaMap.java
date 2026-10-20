@@ -6,7 +6,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-// Le cada linha do CSV e envia a temperatura junto com a quantidade 1, sempre com a mesma chave
+// le cada linha do CSV e envia a temperatura junto com a quantidade 1, sempre com a mesma chave
 public class TemperaturaMap extends Mapper<LongWritable, Text, Text, SomaContagemWritable> {
 
     private static final int INDICE_TEMPERATURA = 8;
@@ -24,6 +24,7 @@ public class TemperaturaMap extends Mapper<LongWritable, Text, Text, SomaContage
             return;
         }
 
+        // conversao da temperatura para numero
         double temperatura;
         try {
             temperatura = Double.parseDouble(colunas[INDICE_TEMPERATURA].trim());
@@ -31,6 +32,7 @@ public class TemperaturaMap extends Mapper<LongWritable, Text, Text, SomaContage
             return;
         }
 
+        // envelope temperatura + quantidade de linhas
         valorComposto.set(temperatura, 1);
         context.write(chaveGlobal, valorComposto);
     }

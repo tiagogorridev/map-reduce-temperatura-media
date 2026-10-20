@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import org.apache.hadoop.io.Writable;
 
-// Guarda a soma das temperaturas e a quantidade de linhas somadas
+// guarda a soma das temperaturas e a quantidade de linhas somadas
 public class SomaContagemWritable implements Writable {
 
     private double soma;
@@ -33,12 +33,14 @@ public class SomaContagemWritable implements Writable {
         return quantidade;
     }
 
+    // bytes
     @Override
     public void write(DataOutput out) throws IOException {
         out.writeDouble(soma);
         out.writeLong(quantidade);
     }
 
+    // reconstrucao
     @Override
     public void readFields(DataInput in) throws IOException {
         soma = in.readDouble();

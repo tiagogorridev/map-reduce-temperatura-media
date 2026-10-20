@@ -8,7 +8,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-// Classe principal: configura e roda o calculo da temperatura media do forestfireinput.csv
+// configura e roda o calculo da temperatura media do arquivo
 public class TemperaturaMain {
 
     public static void main(String[] args) throws Exception {
@@ -18,13 +18,14 @@ public class TemperaturaMain {
         }
 
         Configuration conf = new Configuration();
+
+        // criacao do job
         Job job = Job.getInstance(conf, "media-temperatura");
         job.setJarByClass(TemperaturaMain.class);
 
+        // diz quem é o Map, o Reduce e liga o Combiner (menos trafego de dados)
         job.setMapperClass(TemperaturaMap.class);
         job.setReducerClass(TemperaturaReduce.class);
-
-        // combiner soma os valores em cada maquina antes de enviar, assim trafega menos dado pela rede
         job.setCombinerClass(TemperaturaCombiner.class);
 
         job.setMapOutputKeyClass(Text.class);
@@ -33,6 +34,7 @@ public class TemperaturaMain {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(DoubleWritable.class);
 
+        // garante media geral
         job.setNumReduceTasks(1);
 
         FileInputFormat.addInputPath(job, new Path(args[0]));

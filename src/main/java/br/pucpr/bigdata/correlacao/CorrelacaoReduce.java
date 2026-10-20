@@ -6,7 +6,7 @@ import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-// Junta as somas de todas as maquinas e calcula a correlacao de cada coluna com a temperatura
+// junta as somas de todas as maquinas e calcula a correlacao de cada coluna com a temperatura
 public class CorrelacaoReduce extends Reducer<Text, PearsonWritable, Text, DoubleWritable> {
 
     @Override

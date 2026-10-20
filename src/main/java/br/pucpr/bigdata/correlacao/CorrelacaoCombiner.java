@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-// Soma os valores dentro de cada maquina antes de enviar ao Reduce (nao calcula a correlacao aqui)
+// soma os valores dentro de cada maquina antes de enviar ao Reduce (nao calcula a correlacao aqui)
 public class CorrelacaoCombiner extends Reducer<Text, PearsonWritable, Text, PearsonWritable> {
 
     @Override
